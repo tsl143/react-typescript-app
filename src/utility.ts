@@ -1,5 +1,7 @@
 import { ApplicationType, SortType } from "./types";
 
+export const pageSize = 15;
+
 export const sortArray = (data: Array<ApplicationType>, field: SortType, order: string) => {
   return data.sort(function (first, second) {
     const a = first[field];

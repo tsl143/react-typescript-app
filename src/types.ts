@@ -3,10 +3,13 @@ export type StatusType = "approved" | "rejected" | "waiting";
 
 export type AppStateType = {
   data: Array<ApplicationType>;
+  errorMsg: string;
+  isLoading: boolean;
+  nameFilter: string;
+  page: number;
+  positionFilter: string;
   sortField: string;
   sortOrder: string;
-  nameFilter: string;
-  positionFilter: string;
   statusFilter: StatusType | "";
 };
 
@@ -24,18 +27,35 @@ export type ApplicationType = {
 };
 
 
-export type TablePropType = {
-  data: Array<ApplicationType>;
+export type TablePropType = AppStateType & {
   changeFilter: (field: AppStateKeys, value: string) => void;
   sort: (field: SortType) => void;
-  nameFilter: string;
-  positionFilter: string;
-  statusFilter: StatusType | "";
+  changePage: (page: number) => void;
 };
 
 export type TableBodyPropType = {
   data: Array<ApplicationType>;
 };
+
+export type SortablePropType = {
+  title: string;
+  sortField: string;
+  sortOrder: string;
+  handleClick: (e: React.MouseEvent, field: SortType) => void;
+  sortBy: SortType;
+}
+
+export type PaginationPropType = {
+  page: number;
+  total: number;
+  changePage: (page: number) => void;
+}
+
+export type LoaderPropType = {
+  errorMsg: string;
+  isLoading: boolean;
+  len: number;
+}
 
 export type customDateObj = {
   year: number;

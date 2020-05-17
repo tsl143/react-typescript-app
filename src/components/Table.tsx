@@ -1,13 +1,27 @@
 import React from "react";
 
 import { AppStateKeys, SortType, TablePropType } from "../types";
+import { pageSize } from "../utility";
 
 import TableBody from "./TableBody";
+import Sortable from "./Sortable";
+import Pagination from "./Pagination";
 
 const Table: React.SFC<TablePropType> = (props) => {
-  const { data, sort, nameFilter: nf, positionFilter: pf, statusFilter: sf, changeFilter } = props;
+  const {
+    data,
+    changeFilter,
+    changePage,
+    nameFilter: nf,
+    page,
+    positionFilter: pf,
+    sort,
+    sortField,
+    sortOrder,
+    statusFilter: sf
+  } = props;
 
-  const sliceData = data
+  const filteredData = data
   .filter(d => {
     if(
       (nf !== "" && !d.name.toLowerCase().includes(nf.toLowerCase())) ||
@@ -16,6 +30,9 @@ const Table: React.SFC<TablePropType> = (props) => {
     ) return false;
     return true;
   });
+
+  const startIndex = (page - 1) * pageSize;
+  const sliceData = filteredData.slice(startIndex, startIndex + pageSize);
 
   const handleClick = (e: React.MouseEvent, field: SortType): void => {
     sort(field);
@@ -33,35 +50,48 @@ const Table: React.SFC<TablePropType> = (props) => {
         <thead>
           <tr>
             <th>
-              <span>Name (filter)</span><br/>
-              <input value={nf} onChange={e => handleChange(e, "nameFilter")}/>
+              <span>Name</span><br/>
+              <input className="textFilter" value={nf} onChange={e => handleChange(e, "nameFilter")}/>
             </th>
             <th><span>Email</span></th>
             <th><span>Age</span></th>
             <th>
-              <span className="pointer" onClick={e => handleClick(e, "year_of_experience")}>
-                Years of experience(sort)
-              </span>
+              <Sortable
+                title="Years of experience"
+                handleClick={handleClick}
+                sortBy="year_of_experience"
+                sortField={sortField}
+                sortOrder={sortOrder}
+              />
             </th>
             <th>
-              <span className="pointer" onClick={e => handleClick(e, "position_applied")}>
-                Position Applied(sort/ filter)
-              </span>
+              <Sortable
+                title="Position Applied"
+                handleClick={handleClick}
+                sortBy="position_applied"
+                sortField={sortField}
+                sortOrder={sortOrder}
+              />
               <br/>
-              <input value={pf} onChange={e => handleChange(e, "positionFilter")}/>
+              <input className="textFilter" value={pf} onChange={e => handleChange(e, "positionFilter")}/>
             </th>
             <th>
-              <span className="pointer" onClick={e => handleClick(e, "application_date")}>
-                Applied on(sort)
-              </span>
+              <Sortable
+                title="Applied on"
+                handleClick={handleClick}
+                sortBy="application_date"
+                sortField={sortField}
+                sortOrder={sortOrder}
+              />
             </th>
             <th>
-              <span>Status (filter)</span>
+              <span>Status</span>
+              <br/>
               <select
                 onChange={e => handleChange(e, "statusFilter")}
                 value={sf}
               >
-                <option value=""></option>
+                <option value="">All</option>
                 {["approved", "rejected", "waiting"].map(s => <option value={s} key={s}>{s}</option>)}
               </select>
             </th>
@@ -69,6 +99,7 @@ const Table: React.SFC<TablePropType> = (props) => {
         </thead>
         <TableBody data={sliceData} />
       </table>
+      <Pagination page={page} changePage={changePage} total={filteredData.length}/>
     </div>
   );
 }

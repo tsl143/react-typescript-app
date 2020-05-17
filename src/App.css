@@ -1,7 +1,89 @@
 body {
+  background: #f3f5f9;
   font-family: Arial;
+  padding: 20px;
 }
 
-.pointer{
+#heading {
+  text-align: center;
+}
+
+#messageBox {
+  text-align: center;
+}
+
+/* Table formatting start */
+table {
+  background: #fff;
+  border-spacing: 0px;
+  width: 100%;
+}
+
+table td, table th {
+  border: 1px solid #f4f6f8;
+  padding: 5px;
+}
+
+table th {
+  vertical-align: top;
+}
+
+table th span {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+table td:last-child {
+  text-transform: capitalize;
+}
+
+.textFilter {
+  padding: 5px;
+  width: calc(100% - 10px);
+}
+
+table th select {
+  width: 100%;
+}
+/* Table formatting end */
+
+/* Sortable formatting start */
+.sortable {
+  cursor: pointer;
+  padding-right: 15px;
+  position: relative;
+}
+
+.sortable:before, .sortable:after {
+  display: block;
+  font-size: 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.sortable:not(.desc):before {
+  content: "▲";
+}
+
+.sortable:not(.asc):after {
+  content: "▼";
+  top: 10px;
+}
+/* Sortable formatting end */
+
+
+/* Pagination formatting start */
+#pagination {
+  line-height: 20px;
+  margin-top: 20px;
+  text-align: center;
+  user-select: none;
+}
+#pagination a {
+  display: inline-block;
+  width: 20px;
+  margin: 0 10px;
   cursor: pointer;
 }
+/* Pagination formatting end */
