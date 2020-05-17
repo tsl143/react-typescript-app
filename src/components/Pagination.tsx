@@ -8,9 +8,9 @@ const Pagination: React.SFC<PaginationPropType> = (props) => {
 
   return (
     <div id="pagination">
-      { page > 1 && <a onClick={() => changePage(page - 1)}>«</a> }
+      { page > 1 && <a className="prev" onClick={() => changePage(page - 1)}>«</a> }
       <span>{`Showing ${page} of ${totalPages}`}</span>
-      { page < totalPages && <a onClick={() => changePage(page+1)}>»</a> }
+      { page < totalPages && <a className="next" onClick={() => changePage(page+1)}>»</a> }
     </div>
   )
 }

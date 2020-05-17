@@ -29,7 +29,7 @@ const TableBody: React.SFC<TableBodyPropType> = ({ data }) => {
             <tr key={d.id}>
               <td>{d.name}</td>
               <td>{d.email}</td>
-              <td>{getAge(d.birth_date, today)}</td>
+              <td className="age">{getAge(d.birth_date, today)}</td>
               <td>{d.year_of_experience}</td>
               <td>{d.position_applied}</td>
               <td>{d.application_date}</td>

@@ -12,10 +12,10 @@ const Table: React.SFC<TablePropType> = (props) => {
     data,
     changeFilter,
     changePage,
+    changeSort,
     nameFilter: nf,
     page,
     positionFilter: pf,
-    changeSort,
     sortField,
     sortOrder,
     statusFilter: sf
@@ -35,7 +35,7 @@ const Table: React.SFC<TablePropType> = (props) => {
   const startIndex = (page - 1) * pageSize;
   const sliceData = sortedData.slice(startIndex, startIndex + pageSize);
 
-  const handleClick = (e: React.MouseEvent, field: sortFieldType): void => {
+  const handleClick = (field: sortFieldType): void => {
     changeSort(field);
   }
 
@@ -46,13 +46,13 @@ const Table: React.SFC<TablePropType> = (props) => {
   }
 
   return (
-    <div className="applicationTable">
+    <div id="applicationTable">
       <table>
         <thead>
           <tr>
             <th>
               <span>Name</span><br/>
-              <input className="textFilter" value={nf} onChange={e => handleChange(e, "nameFilter")}/>
+              <input className="textFilter name" value={nf} onChange={e => handleChange(e, "nameFilter")}/>
             </th>
             <th><span>Email</span></th>
             <th><span>Age</span></th>
@@ -74,7 +74,7 @@ const Table: React.SFC<TablePropType> = (props) => {
                 sortOrder={sortOrder}
               />
               <br/>
-              <input className="textFilter" value={pf} onChange={e => handleChange(e, "positionFilter")}/>
+              <input className="textFilter position" value={pf} onChange={e => handleChange(e, "positionFilter")}/>
             </th>
             <th>
               <Sortable

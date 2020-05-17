@@ -44,7 +44,7 @@ export type SortablePropType = {
   title: string;
   sortField: string;
   sortOrder: string;
-  handleClick: (e: React.MouseEvent, field: sortFieldType) => void;
+  handleClick: (field: sortFieldType) => void;
   sortBy: sortFieldType;
 }
 

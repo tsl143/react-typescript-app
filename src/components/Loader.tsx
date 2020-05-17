@@ -5,7 +5,7 @@ const Loader: React.SFC<LoaderPropType> = ({ errorMsg, isLoading }) => {
   const msg = errorMsg !== "" ? errorMsg : "No data found";
   return (
     <div className="center">
-      {isLoading ? <p> Loading ... </p> : <p> { msg } </p>}
+      {isLoading ? <p>Loading ...</p> : <p>{ msg }</p>}
     </div>
   )
 }

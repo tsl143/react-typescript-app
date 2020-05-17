@@ -2,15 +2,15 @@ import React from "react";
 import { SortablePropType } from "../types";
 
 const Sortable: React.SFC<SortablePropType> = (props) => {
-  const { title, handleClick, sortBy, sortField, sortOrder } = props;
+  const { handleClick, sortBy, sortField, sortOrder, title } = props;
   const classNames = (() => {
-    let names = "sortable";
+    let names = `${sortBy} sortable`;
     if (sortBy === sortField) names += " " + sortOrder.toLowerCase();
     return names;
   })();
 
   return (
-    <span className={classNames} onClick={e => handleClick(e, sortBy)}>
+    <span className={classNames} onClick={() => handleClick(sortBy)}>
       {title}
     </span>
   )
