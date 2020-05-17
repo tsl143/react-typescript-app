@@ -1,32 +1,32 @@
 import React from "react";
+import { RouteComponentProps } from "react-router-dom";
 
 import "../App.css";
-import { AppStateType, AppStateKeys, SortType } from "../types";
-import { sortArray } from "../utility";
 
 import Header from "./Header";
 import Table from "./Table";
 import Loader from "./Loader";
 
-export default class App extends React.PureComponent<{}, AppStateType>{
+import { AppStateType, AppStateKeys, sortFieldType, queryParamsType } from "../types";
+import { API_URL, resolveQueryParams, stringifyQueryParams } from "../utility";
 
-  constructor(props: {}) {
+export default class App extends React.PureComponent<RouteComponentProps, AppStateType>{
+
+  constructor(props: RouteComponentProps) {
     super(props);
+    // Get state of filters and sorts from querystring or fallback to default.
+    const stateFromQS = resolveQueryParams(props.location.search);
     this.state = {
+      ...stateFromQS,
       data: [],
       errorMsg: "",
       isLoading: true,
-      nameFilter: "",
-      page: 1,
-      positionFilter: "",
-      sortField: "",
-      sortOrder: "ASC",
-      statusFilter: ""
+      page: 1
     }
   }
 
   componentDidMount() {
-    fetch("http://localhost:8112/candidates.json")
+    fetch(API_URL)
     .then(r => {
       if (r.ok) return r.json();
       throw new Error("network Fetch Fail");
@@ -42,31 +42,48 @@ export default class App extends React.PureComponent<{}, AppStateType>{
     .catch(e => this.setState({
       isLoading: false,
       errorMsg: e.toString()
-    }))
+    }));
   }
 
-  // Sorts the data and update field and order in state.
-  sort = (field: SortType) => {
-    const { data, sortField, sortOrder } = this.state;
+  // This updates the persistent URL query parameters
+  updateURL = (obj: { [key: string]: string }) => {
+    // Get state of filters and sorts from querystring or fallback to default.
+    // Define extra key-value as string due to dynamic keys
+    const stateFromQS: queryParamsType & { [key: string]: string }
+      = resolveQueryParams(this.props.location.search);
+    for (let q in obj) {
+      stateFromQS[q] = obj[q];
+    }
+    // Create querystring after updating the params
+    const QS = stringifyQueryParams(stateFromQS);
+    this.props.history.push({
+      pathname: '/',
+      search: QS
+    });
+  }
+
+  changeSort = (field: sortFieldType) => {
+    const { sortField, sortOrder } = this.state;
     let newOrder = "ASC";
     if (sortField === field) {
       newOrder = sortOrder === "ASC" ? "DESC" : "ASC";
     }
-    const sortedData = sortArray(data, field, newOrder);
+
     this.setState({
-      data: sortedData,
       page: 1,
       sortField: field,
       sortOrder: newOrder
-    })
+    });
+    this.updateURL({ sortField: field, sortOrder: newOrder });
   }
 
   changeFilter = (key: AppStateKeys, value: string) => {
     this.setState(prevState => ({
       ...prevState,
       page: 1,
-      [key]: value,
+      [key]: value
     }));
+    this.updateURL({ [key]: value });
   }
 
   changePage = (page: number) => this.setState({ page });
@@ -82,12 +99,12 @@ export default class App extends React.PureComponent<{}, AppStateType>{
           ? <Table
               { ...this.state }
               changeFilter={this.changeFilter}
-              sort={this.sort}
+              changeSort={this.changeSort}
               changePage={this.changePage}
             />
-          : <Loader len={data.length} errorMsg={errorMsg} isLoading={isLoading}/>
+          : <Loader errorMsg={errorMsg} isLoading={isLoading}/>
         }
       </div>
     );
-  }
+  };
 }

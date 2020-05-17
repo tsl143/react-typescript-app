@@ -4,11 +4,7 @@ body {
   padding: 20px;
 }
 
-#heading {
-  text-align: center;
-}
-
-#messageBox {
+.center {
   text-align: center;
 }
 

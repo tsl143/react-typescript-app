@@ -1,7 +1,7 @@
 import React from "react";
 
-import { AppStateKeys, SortType, TablePropType } from "../types";
-import { pageSize } from "../utility";
+import { AppStateKeys, sortFieldType, TablePropType } from "../types";
+import { pageSize, sortArray } from "../utility";
 
 import TableBody from "./TableBody";
 import Sortable from "./Sortable";
@@ -15,7 +15,7 @@ const Table: React.SFC<TablePropType> = (props) => {
     nameFilter: nf,
     page,
     positionFilter: pf,
-    sort,
+    changeSort,
     sortField,
     sortOrder,
     statusFilter: sf
@@ -30,12 +30,13 @@ const Table: React.SFC<TablePropType> = (props) => {
     ) return false;
     return true;
   });
+  const sortedData = sortArray(filteredData, sortField, sortOrder);
 
   const startIndex = (page - 1) * pageSize;
-  const sliceData = filteredData.slice(startIndex, startIndex + pageSize);
+  const sliceData = sortedData.slice(startIndex, startIndex + pageSize);
 
-  const handleClick = (e: React.MouseEvent, field: SortType): void => {
-    sort(field);
+  const handleClick = (e: React.MouseEvent, field: sortFieldType): void => {
+    changeSort(field);
   }
 
   // Handles both input and selectbox events.
@@ -99,7 +100,10 @@ const Table: React.SFC<TablePropType> = (props) => {
         </thead>
         <TableBody data={sliceData} />
       </table>
-      <Pagination page={page} changePage={changePage} total={filteredData.length}/>
+      {
+        sortedData.length !== 0 &&
+        <Pagination page={page} changePage={changePage} total={sortedData.length}/>
+      }
     </div>
   );
 }

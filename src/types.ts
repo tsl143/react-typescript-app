@@ -1,16 +1,19 @@
-export type SortType = "year_of_experience" | "position_applied" | "application_date";
+export type sortFieldType = "year_of_experience" | "position_applied" | "application_date";
 export type StatusType = "approved" | "rejected" | "waiting";
 
-export type AppStateType = {
+export type queryParamsType = {
+  nameFilter: string;
+  positionFilter: string;
+  sortField: sortFieldType;
+  sortOrder: string;
+  statusFilter: StatusType | "";
+};
+
+export type AppStateType = queryParamsType & {
   data: Array<ApplicationType>;
   errorMsg: string;
   isLoading: boolean;
-  nameFilter: string;
   page: number;
-  positionFilter: string;
-  sortField: string;
-  sortOrder: string;
-  statusFilter: StatusType | "";
 };
 
 export type AppStateKeys = keyof AppStateType;
@@ -29,7 +32,7 @@ export type ApplicationType = {
 
 export type TablePropType = AppStateType & {
   changeFilter: (field: AppStateKeys, value: string) => void;
-  sort: (field: SortType) => void;
+  changeSort: (field: sortFieldType) => void;
   changePage: (page: number) => void;
 };
 
@@ -41,8 +44,8 @@ export type SortablePropType = {
   title: string;
   sortField: string;
   sortOrder: string;
-  handleClick: (e: React.MouseEvent, field: SortType) => void;
-  sortBy: SortType;
+  handleClick: (e: React.MouseEvent, field: sortFieldType) => void;
+  sortBy: sortFieldType;
 }
 
 export type PaginationPropType = {
@@ -54,7 +57,6 @@ export type PaginationPropType = {
 export type LoaderPropType = {
   errorMsg: string;
   isLoading: boolean;
-  len: number;
 }
 
 export type customDateObj = {
