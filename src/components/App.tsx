@@ -7,11 +7,10 @@ import Header from "./Header";
 import Table from "./Table";
 import Loader from "./Loader";
 
-import { AppStateType, AppStateKeys, sortFieldType, queryParamsType } from "../types";
+import { AppStateType, AppStateKeys, QueryParamsType, SortFieldType } from "../types";
 import { API_URL, resolveQueryParams, stringifyQueryParams } from "../utility";
 
 export default class App extends React.PureComponent<RouteComponentProps, AppStateType>{
-
   constructor(props: RouteComponentProps) {
     super(props);
     // Get state of filters and sorts from querystring or fallback to default.
@@ -32,6 +31,7 @@ export default class App extends React.PureComponent<RouteComponentProps, AppSta
       throw new Error("network Fetch Fail");
     })
     .then(d => {
+      if (d.error) throw new Error(`Server Error: ${d.error.message}`);
       if (!d.data) throw new Error("Unexpected JSON format");
       this.setState({
         data: d.data,
@@ -49,11 +49,11 @@ export default class App extends React.PureComponent<RouteComponentProps, AppSta
   updateURL = (obj: { [key: string]: string }) => {
     // Get state of filters and sorts from querystring or fallback to default.
     // Define extra key-value as string due to dynamic keys
-    const stateFromQS: queryParamsType & { [key: string]: string }
+    const stateFromQS: QueryParamsType & { [key: string]: string }
       = resolveQueryParams(this.props.location.search);
     for (let q in obj) {
       stateFromQS[q] = obj[q];
-    }
+    };
     // Create querystring after updating the params
     const QS = stringifyQueryParams(stateFromQS);
     this.props.history.push({
@@ -62,7 +62,7 @@ export default class App extends React.PureComponent<RouteComponentProps, AppSta
     });
   }
 
-  changeSort = (field: sortFieldType) => {
+  changeSort = (field: SortFieldType) => {
     const { sortField, sortOrder } = this.state;
     let newOrder = "ASC";
     if (sortField === field) {
@@ -107,4 +107,4 @@ export default class App extends React.PureComponent<RouteComponentProps, AppSta
       </div>
     );
   };
-}
+};

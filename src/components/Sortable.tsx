@@ -1,7 +1,7 @@
 import React from "react";
 import { SortablePropType } from "../types";
 
-const Sortable: React.SFC<SortablePropType> = (props) => {
+const Sortable: React.SFC<SortablePropType> = props => {
   const { handleClick, sortBy, sortField, sortOrder, title } = props;
   const classNames = (() => {
     let names = `${sortBy} sortable`;
@@ -13,7 +13,7 @@ const Sortable: React.SFC<SortablePropType> = (props) => {
     <span className={classNames} onClick={() => handleClick(sortBy)}>
       {title}
     </span>
-  )
-}
+  );
+};
 
-export default Sortable;
+export default React.memo(Sortable);

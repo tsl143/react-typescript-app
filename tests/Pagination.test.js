@@ -8,11 +8,11 @@ const props = {
   page: 1,
   changePage: jest.fn(),
   total: 35
-}
+};
 
 const totalPages = Math.ceil(props.total / pageSize);
 
-describe("Render", () => {
+describe("Pagination Component", () => {
   it("renders Pagination", () => {
     const wrapper = mount(<Pagination { ...props }/>);
     expect(wrapper.exists()).toBe(true);

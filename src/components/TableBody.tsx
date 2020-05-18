@@ -7,7 +7,7 @@ const TableBody: React.SFC<TableBodyPropType> = ({ data }) => {
     year: currentDate.getFullYear(),
     month: currentDate.getMonth(),
     day: currentDate.getDate()
-  }
+  };
 
   const getAge = (birthDay: string, matchDate: customDateObj): number => {
     // Split date from "YYYY-MM-DD" to array
@@ -19,7 +19,7 @@ const TableBody: React.SFC<TableBodyPropType> = ({ data }) => {
       (matchDate.day < ~~dob[2])
     ) age--;
     return age;
-  }
+  };
 
   return (
     <tbody>
@@ -40,6 +40,6 @@ const TableBody: React.SFC<TableBodyPropType> = ({ data }) => {
       }
     </tbody>
   );
-}
+};
 
 export default TableBody;

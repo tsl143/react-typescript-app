@@ -40,7 +40,6 @@ describe("Table Component", () => {
 
   it("handles sort click", () => {
     const wrapper = mount(<Table { ...props } />);
-    let x=0;
     [
       "year_of_experience",
       "position_applied",
@@ -59,5 +58,17 @@ describe("Table Component", () => {
     rows.forEach(row => {
       expect(row.find("td:last-child").text()).toEqual("waiting");
     });
+  });
+
+  it("handles case-sensitive prefilled name filter", () => {
+    const newProps = {
+      ...props,
+      data: candidates.data,
+      nameFilter: "ALV",
+      positionFilter: "Technician"
+    };
+    const wrapper = mount(<Table { ...newProps } />);
+    const row = wrapper.find("tbody tr:first-child");
+    expect(row.find("td:first-child").text()).toEqual("Alvin Satterfield");
   });
 });

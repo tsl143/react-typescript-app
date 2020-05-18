@@ -9,9 +9,9 @@ const props = {
   sortBy: "position_applied",
   sortField: "",
   sortOrder: "ASC"
-}
+};
 
-describe("Render", () => {
+describe("Sortable Component", () => {
   it("renders Sortable", () => {
     const wrapper = mount(<Sortable { ...props }/>);
     expect(wrapper.exists()).toBe(true);
@@ -25,14 +25,14 @@ describe("Render", () => {
     expect(props.handleClick).toHaveBeenCalledWith(props.sortBy);
   });
 
-  it("render asc class", () => {
+  it("has asc class while sorting ascending order", () => {
     const newProps = { ...props, sortField: "position_applied" };
     const wrapper = mount(<Sortable { ...newProps }/>);
     expect(wrapper.find("span").hasClass("asc")).toBe(true);
     expect(wrapper.find("span").hasClass("desc")).toBe(false);
   });
 
-  it("render desc class", () => {
+  it("has desc class while sorting descending order", () => {
     const newProps = { ...props, sortField: "position_applied", sortOrder: "DESC" };
     const wrapper = mount(<Sortable { ...newProps }/>);
     expect(wrapper.find("span").hasClass("desc")).toBe(true);

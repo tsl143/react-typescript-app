@@ -8,6 +8,6 @@ const Loader: React.SFC<LoaderPropType> = ({ errorMsg, isLoading }) => {
       {isLoading ? <p>Loading ...</p> : <p>{ msg }</p>}
     </div>
   )
-}
+};
 
 export default Loader;

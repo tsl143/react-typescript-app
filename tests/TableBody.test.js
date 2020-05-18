@@ -5,7 +5,7 @@ import TableBody from "Component/TableBody";
 import candidates from "./candidates.json";
 const data = candidates.data.slice(0,10);
 
-describe("Render Table body", () => {
+describe("TableBody component", () => {
   let wrapper;
 
   beforeEach(() => {

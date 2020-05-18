@@ -1,15 +1,15 @@
-export type sortFieldType = "year_of_experience" | "position_applied" | "application_date";
+export type SortFieldType = "year_of_experience" | "position_applied" | "application_date";
 export type StatusType = "approved" | "rejected" | "waiting";
 
-export type queryParamsType = {
+export type QueryParamsType = {
   nameFilter: string;
   positionFilter: string;
-  sortField: sortFieldType;
+  sortField: SortFieldType;
   sortOrder: string;
   statusFilter: StatusType | "";
 };
 
-export type AppStateType = queryParamsType & {
+export type AppStateType = QueryParamsType & {
   data: Array<ApplicationType>;
   errorMsg: string;
   isLoading: boolean;
@@ -19,21 +19,22 @@ export type AppStateType = queryParamsType & {
 export type AppStateKeys = keyof AppStateType;
 
 export type ApplicationType = {
+  application_date: string;
+  birth_date: string;
+  email: string;
   id: number;
   name: string;
-  email: string;
-  birth_date: string;
-  year_of_experience: number;
   position_applied: string;
-  application_date: string;
   status: StatusType;
+  year_of_experience: number;
 };
 
-
-export type TablePropType = AppStateType & {
+export type TablePropType = QueryParamsType & {
   changeFilter: (field: AppStateKeys, value: string) => void;
-  changeSort: (field: sortFieldType) => void;
+  changeSort: (field: SortFieldType) => void;
   changePage: (page: number) => void;
+  data: Array<ApplicationType>;
+  page: number;
 };
 
 export type TableBodyPropType = {
@@ -41,26 +42,26 @@ export type TableBodyPropType = {
 };
 
 export type SortablePropType = {
-  title: string;
+  handleClick: (field: SortFieldType) => void;
+  sortBy: SortFieldType;
   sortField: string;
   sortOrder: string;
-  handleClick: (field: sortFieldType) => void;
-  sortBy: sortFieldType;
-}
+  title: string;
+};
 
 export type PaginationPropType = {
+  changePage: (page: number) => void;
   page: number;
   total: number;
-  changePage: (page: number) => void;
-}
+};
 
 export type LoaderPropType = {
   errorMsg: string;
   isLoading: boolean;
-}
+};
 
 export type customDateObj = {
-  year: number;
-  month: number;
   day: number;
-}
+  month: number;
+  year: number;
+};

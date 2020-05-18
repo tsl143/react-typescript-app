@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AppStateKeys, sortFieldType, TablePropType } from "../types";
+import { AppStateKeys, TablePropType } from "../types";
 import { pageSize, sortArray } from "../utility";
 
 import TableBody from "./TableBody";
@@ -35,15 +35,11 @@ const Table: React.SFC<TablePropType> = (props) => {
   const startIndex = (page - 1) * pageSize;
   const sliceData = sortedData.slice(startIndex, startIndex + pageSize);
 
-  const handleClick = (field: sortFieldType): void => {
-    changeSort(field);
-  }
-
   // Handles both input and selectbox events.
   const handleChange = (event: React.ChangeEvent, field: AppStateKeys): void => {
     const target = event.target as HTMLInputElement;
     changeFilter(field, target.value);
-  }
+  };
 
   return (
     <div id="applicationTable">
@@ -59,7 +55,7 @@ const Table: React.SFC<TablePropType> = (props) => {
             <th>
               <Sortable
                 title="Years of experience"
-                handleClick={handleClick}
+                handleClick={changeSort}
                 sortBy="year_of_experience"
                 sortField={sortField}
                 sortOrder={sortOrder}
@@ -68,7 +64,7 @@ const Table: React.SFC<TablePropType> = (props) => {
             <th>
               <Sortable
                 title="Position Applied"
-                handleClick={handleClick}
+                handleClick={changeSort}
                 sortBy="position_applied"
                 sortField={sortField}
                 sortOrder={sortOrder}
@@ -79,7 +75,7 @@ const Table: React.SFC<TablePropType> = (props) => {
             <th>
               <Sortable
                 title="Applied on"
-                handleClick={handleClick}
+                handleClick={changeSort}
                 sortBy="application_date"
                 sortField={sortField}
                 sortOrder={sortOrder}
@@ -106,6 +102,6 @@ const Table: React.SFC<TablePropType> = (props) => {
       }
     </div>
   );
-}
+};
 
 export default Table;
