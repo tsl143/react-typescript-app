@@ -2,7 +2,7 @@ import React from "react";
 import { mount } from "enzyme";
 
 import TableBody from "Component/TableBody";
-import candidates from "./candidates.json";
+import candidates from "../candidates.json";
 const data = candidates.data.slice(0,10);
 
 describe("TableBody component", () => {

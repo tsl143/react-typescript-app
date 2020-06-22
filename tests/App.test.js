@@ -1,7 +1,7 @@
 import React from "react";
 import { mount } from "enzyme";
 
-import candidates from "./candidates.json";
+import candidates from "../candidates.json";
 import App from "Component/App";
 import Header from "Component/Header";
 import Table from "Component/Table";

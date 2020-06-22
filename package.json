@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "tsl143",
   "scripts": {
+    "build": "webpack",
     "start": "webpack-dev-server",
     "test": "jest --watchAll",
     "coverage": "jest --collect-coverage"

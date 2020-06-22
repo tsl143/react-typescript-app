@@ -1,7 +1,7 @@
 import { ApplicationType, QueryParamsType, SortFieldType } from "./types";
 
 export const pageSize = 15;
-export const API_URL = "http://personio-fe-test.herokuapp.com/api/v1/candidates";
+export const API_URL = "/candidates";
 
 export const sortArray = (data: Array<ApplicationType>, field: SortFieldType, order: string) => {
   return data.sort(function (first, second) {

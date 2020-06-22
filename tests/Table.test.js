@@ -1,7 +1,7 @@
 import React from "react";
 import { mount } from "enzyme";
 
-import candidates from "./candidates.json";
+import candidates from "../candidates.json";
 import Table from "Component/Table";
 
 const props = {
